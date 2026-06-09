@@ -1,0 +1,406 @@
+.theme-toggle {
+    margin-top: auto;
+    padding-top: 20px;
+}
+
+.theme-toggle button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.theme-toggle button:hover {
+    color: white;
+}
+
+/*ALINEAMIENTO INCIAL*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: #f2f2f2;
+    color: #333
+}
+
+/* Contenedor principal */
+.app {
+    display: grid;
+    grid-template-columns: 210px 1fr;
+    height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    background-color: #e5e5e5;
+    padding: 20px 15px;
+}
+
+/* Logo */
+.logo {
+    margin-bottom: 40px;
+    font-size: 20px;
+    text-align: center;
+    color: #333;
+    font-weight: 600;
+}
+
+/* Menú */
+.menu ul {
+    list-style: none;
+}
+
+.menu li {
+    padding: 12px 14px;
+    
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin-bottom: 8px;
+    cursor: pointer;
+    border-radius: 8px;
+    color: #333;
+    font-size: 15px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.menu li i {
+    font-size: 16px;
+    width: 20px;
+    text-align: center;
+}
+
+
+/* Hover celeste más intenso */
+.menu li:hover {
+    background-color: #00cfff;
+    color: #fff;
+}
+
+.menu li.active {
+    background-color: #009fc2;
+    color: #fff;
+    font-weight: 600;
+}
+
+
+/* Área de contenido */
+.content {
+    padding: 30px;
+    background-color: #ffffff;
+    overflow-y: auto;
+}
+
+/* Contenedor centrado */
+.content-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* Card principal en Inicio */
+.card {
+    background-color: #ffffff;
+    border-radius: 12px;              
+    padding: 24px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr; 
+    gap: 24px;
+    
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* Lado izquierdo: descripción */
+.card-left h2 {
+    margin-bottom: 12px;
+    color: #333;
+}
+
+
+p {
+    color: var(--text-main);
+}
+
+.card-left p {
+    margin-bottom: 10px;
+    line-height: 1.6;
+    color: #555;
+}
+
+#calendar {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 10px;
+    height: 100%;
+    min-height: 320px;
+}
+
+/* Tabs */
+.tabs {
+    margin: 20px 0;
+}
+
+.tab-btn {
+    padding: 10px 16px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 8px;
+    background-color: #e0e0e0;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.tab-btn.active {
+    background-color: #00cfff;
+    color: white;
+}
+
+/* Contenido */
+.tab-view {
+    display: none;
+}
+
+.tab-view.active {
+    display: block;
+    animation: fadeUp 0.2s ease;
+}
+
+/* Vistas */
+.view {
+    display: none;
+}
+
+.view.active {
+    display: block;
+    animation: fadeUp 0.25s ease;
+}
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/*DISEÑO SECCION CITAS*/
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* filas dobles */
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+/* cada campo */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+/* campo ancho completo */
+.form-group.full {
+    width: 100%;
+}
+
+/* inputs */
+.form input,
+.form select,
+.form textarea {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    outline: none;
+}
+
+.form textarea {
+    height: 90px;
+    resize: none;
+}
+
+/* focus */
+.form input:focus,
+.form select:focus,
+.form textarea:focus {
+    border-color: #00cfff;
+}
+
+/* botón */
+.form button {
+    margin-top: 10px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #00cfff;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.form button:hover {
+    background-color: #009fc2;
+}
+
+/*DISEÑO TABLE*/
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th, td {
+    padding: 10px;
+}
+
+th {
+    background-color: #f0f0f0;
+    text-align: left;
+}
+
+tr:nth-child(even) {
+    background-color: #fafafa;
+}
+/*COLOR DE ESTATUS*/
+.status {
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* colores */
+.pendiente {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.atendida {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.cancelada {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/*DISEÑO TABLA SECCION HORARIOS Y SERVICIOS*/
+.description {
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: 12px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #f0f0f0;
+    font-weight: 600;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+/*DISEÑO SECCION USUARIO*/
+.user-actions {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+/* Botón editar */
+#editBtn {
+    background-color: #6c757d;
+    color: white;
+}
+
+/* Botón guardar */
+#saveBtn {
+    background-color: #00cfff;
+    color: white;
+}
+
+/* inputs desactivados */
+.form input:disabled {
+    background-color: #f1f1f1;
+    color: #777;
+}
+
+/*DISEÑO CONTACTO*/
+/* Contenedor de contacto */
+.contact-container {
+    padding: 20px;
+}
+
+/* Grid de tarjetas */
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+/* Tarjetas */
+.contact-card {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+    transition: transform 0.2s ease;
+}
+
+/* Hover */
+.contact-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Títulos */
+.contact-card h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* texto */
+.contact-card p {
+    color: #555;
+    font-size: 14px;
+}
+
+/*VALIDACIONES DEL FORMULARIO*/
+/* texto de error */
+.error-text {
+    color: red;
+    font-size: 12px;
+}
+
+/* borde de error */
+.error {
+    border-color: red !important;
+}

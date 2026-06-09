@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Citas Médicas</title>
+    <!-- FullCalendar CSS -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app">
+
+    <!-- Menú lateral -->
+    <aside class="sidebar">
+        <h2 class="logo">Clínica Salud Integral</h2>
+
+        <nav class="menu">
+            <ul>
+                <li data-section="inicio" class="active">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Inicio</span>
+                </li>
+                <li data-section="cita">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <span>Cita</span>
+                </li>
+
+                <li data-section="horarios">
+                    <i class="fa-solid fa-clock"></i>
+                    <span>Horarios</span>
+                </li>
+
+                <li data-section="usuario">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Usuario</span>
+                </li>
+
+                <li data-section="contacto">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span>Contacto</span>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Contenido principal -->
+    <main class="content">
+        <div class="content-wrapper">
+
+            <section id="inicio" class="view active">
+                <div class="card">
+                    <div class="card-left">
+                        <h2>Bienvenido al sistema de citas</h2>
+                        <p>
+                            Aquí podrás gestionar tus citas médicas de forma sencilla. 
+                            Navega por el menú para registrar una nueva cita, revisar horarios,
+                            consultar citas anteriores y actualizar tus datos de usuario.
+                        </p>
+                        <p>
+                            En esta pantalla inicial encontrarás un calendario donde se
+                            visualizarán tus próximas citas. Por ahora es solo una vista
+                            informativa; más adelante se conectará a la base de datos.
+                        </p>
+                    </div>
+
+                    <div class="card-right">
+                        <div id="calendar"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="cita" class="view">
+                <h1>Gestión de Citas</h1>
+
+                <!-- Botones tipo tabs -->
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="nueva">+ Nueva cita</button>
+                    <button class="tab-btn" data-tab="antiguas">Citas antiguas</button>
+                </div>
+
+                <!-- Contenido de tabs -->
+                <div class="tab-content">
+
+                    <!-- Nueva cita -->
+                    <div id="nueva" class="tab-view active">
+                        <div class="card">
+                            <h2>Registrar nueva cita</h2>
+
+                            <form class="form" id="citaForm">
+
+                                <div class="form-group full">
+                                    <label>Descripción</label>
+                                    <textarea id="descripcion" placeholder="Motivo de la cita"></textarea>
+                                    <small class="error-text"></small>
+                                </div>
+
+                                <div class="form-row">
+
+                                    <div class="form-group">
+                                        <label>Especialidad</label>
+                                        <select id="especialidad">
+                                            <option value="">Seleccione especialidad</option>
+                                            <option>Medicina General</option>
+                                            <option>Cardiología</option>
+                                        </select>
+                                        <small class="error-text"></small>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Fecha</label>
+                                        <input type="date" id="fecha">
+                                        <small class="error-text"></small>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-row">
+
+                                    <div class="form-group">
+                                        <label>Hora</label>
+                                        <input type="time" id="hora">
+                                        <small class="error-text"></small>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Médico disponible</label>
+                                        <select id="medico">
+                                            <option value="">Seleccione médico</option>
+                                            <option>Roberto Gomez</option>
+                                        </select>
+                                        <small class="error-text"></small>
+                                    </div>
+
+                                </div>
+
+                                <button type="submit">Registrar cita</button>
+
+                            </form>
+
+                        </div>
+                    </div>
+
+                    <!-- Citas antiguas -->
+                    <div id="antiguas" class="tab-view">
+                        <div class="card">
+                            <h2>Citas registradas</h2>
+
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Cita</th>
+                                        <th>Fecha/Hora</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Medicina General</td>
+                                        <td>25/05/2026 10:00</td>
+                                        <td><span class="status pendiente">Pendiente</span></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Cardiología</td>
+                                        <td>20/05/2026 12:30</td>
+                                        <td><span class="status atendida">Atendida</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <section id="horarios" class="view">
+                <h1>Horarios y Servicios</h1>
+
+                <div class="card">
+
+                    <p class="description">
+                        A continuación se muestran los horarios de atención según la especialidad
+                        médica disponible en la clínica.
+                    </p>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Especialidad</th>
+                                <th>Día</th>
+                                <th>Horario</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Medicina General</td>
+                                <td>Lunes a Viernes</td>
+                                <td>08:00 - 17:00</td>
+                            </tr>
+                            <tr>
+                                <td>Cardiología</td>
+                                <td>Martes y Jueves</td>
+                                <td>09:00 - 13:00</td>
+                            </tr>
+                            <tr>
+                                <td>Dermatología</td>
+                                <td>Lunes y Viernes</td>
+                                <td>10:00 - 14:00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </section>
+
+            <section id="usuario" class="view">
+                <h1>Perfil de Usuario</h1>
+
+                <div class="card">
+
+                    <h2>Datos personales</h2>
+
+                    <form class="form" id="userForm">
+
+                        <!-- DATOS FIJOS -->
+                        <div class="form-row">
+
+                            <div class="form-group">
+                                <label>Nombre</label>
+                                <input type="text" value="Mauricio" disabled>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Apellidos</label>
+                                <input type="text" value="Sono Orue" disabled>
+                            </div>
+
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+                                <label>DNI</label>
+                                <input type="text" value="12345678" disabled>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Teléfono</label>
+                                <input type="text" value="987654321" class="editable">
+                            </div>
+
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+                                <label>Correo</label>
+                                <input type="email" value="mauricio@gmail.com" class="editable">
+                            </div>
+
+                        </div>
+
+                        <!-- BOTONES -->
+                        <div class="user-actions">
+                            <button type="button" id="editBtn">Editar datos</button>
+                            <button type="submit" id="saveBtn" style="display:none;">Guardar cambios</button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </section>
+
+            <section id="contacto" class="view">
+                <h1>Contacto</h1>
+
+                <div class="card contact-container">
+
+                    <div class="contact-grid">
+
+                        <!-- EMAIL -->
+                        <div class="contact-card">
+                            <h3>📧 Correo electrónico</h3>
+                            <p>contacto@clinica.com</p>
+                        </div>
+
+                        <!-- TELÉFONO -->
+                        <div class="contact-card">
+                            <h3>📞 Teléfono</h3>
+                            <p>(01) 555-1234</p>
+                        </div>
+
+                        <!-- DIRECCIÓN -->
+                        <div class="contact-card">
+                            <h3>📍 Dirección</h3>
+                            <p>Av. Salud N° 123 - Lima</p>
+                        </div>
+
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
