@@ -1,0 +1,78 @@
+body.login {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+
+    background: url("/static/img/fondo_login.jpg") no-repeat center center/cover;
+}
+
+body.registro {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+
+    background: url("/static/img/fondo_registro.jpg") no-repeat center center/cover;
+}
+
+.contenedor {
+    width: 400px;
+    margin: 60px auto;
+    padding: 40px;
+
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+
+    color: white;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.formulario label {
+    display: block;
+    margin-top: 15px;
+}
+
+.formulario input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid white;
+    background: transparent;
+    color: white;
+    padding: 5px;
+    outline: none;
+}
+
+.formulario button {
+    width: 100%;
+    margin-top: 25px;
+    padding: 10px;
+    border: none;
+    background: #00aaff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.formulario button:hover {
+    background: #0077cc;
+}
+
+.mensaje {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.link {
+    display: block;
+    margin-top: 15px;
+    text-align: center;
+    color: #00aaff;
+    text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
