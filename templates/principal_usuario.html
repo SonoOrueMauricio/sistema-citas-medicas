@@ -6,7 +6,7 @@
     <!-- FullCalendar CSS -->
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="static/css/usuario.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/usuario.css') }}">
 </head>
 <body>
 
@@ -309,6 +309,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
-<script src="static/js/usuario.js"></script>
+<script src="{{ url_for('static', filename='js/usuario.js') }}"></script>
 </body>
 </html>

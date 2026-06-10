@@ -32,7 +32,7 @@ def login():
         conexion.close()
 
         if usuario:
-            return redirect('/panel')
+            return redirect('/principal_usuario')
         else:
             mensaje = "❌ Usuario o contraseña incorrectos"
 
@@ -87,6 +87,11 @@ def registro():
 @app.route('/panel')
 def panel():
     return "<h1>✅ Bienvenido al sistema</h1>"
+
+
+@app.route('/principal_usuario')
+def principal_usuario():
+    return render_template('principal_usuario.html')
 
 
 if __name__ == '__main__':
