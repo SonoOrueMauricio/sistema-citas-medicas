@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from database import conectar
 from flask import redirect, url_for
+from flask import request, jsonify
 
 app = Flask(__name__)
 
@@ -32,7 +33,7 @@ def login():
         conexion.close()
 
         if usuario:
-            return redirect('/principal_usuario')
+            return redirect(url_for('principal_usuario'))
         else:
             mensaje = "❌ Usuario o contraseña incorrectos"
 
@@ -75,7 +76,7 @@ def registro():
             cursor.close()
             conexion.close()
 
-            mensaje = "✅ Usuario registrado correctamente"
+            return redirect(url_for('login'))
 
         except Exception as e:
             print(e)
@@ -84,14 +85,33 @@ def registro():
     return render_template('registro.html', mensaje=mensaje)
 
 
-@app.route('/panel')
-def panel():
-    return "<h1>✅ Bienvenido al sistema</h1>"
-
-
 @app.route('/principal_usuario')
 def principal_usuario():
     return render_template('principal_usuario.html')
+
+
+@app.route('/guardar_cita', methods=['POST'])
+def guardar_cita():
+    data = request.get_json()
+    descripcion = data['descripcion']
+    especialidad = data['especialidad']
+    fecha = data['fecha']
+    hora = data['hora']
+    medico = data['medico']
+
+    conexion = conectar()
+    cursor = conexion.cursor()
+
+    cursor.execute("""
+        INSERT INTO cita (id_paciente, id_medico, fecha, hora, estado)
+        VALUES (%s, %s, %s, %s, %s)
+    """, (1, 1, fecha, hora, 'pendiente'))
+
+    conexion.commit()
+    cursor.close()
+    conexion.close()
+
+    return "ok"
 
 
 if __name__ == '__main__':

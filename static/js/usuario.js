@@ -175,8 +175,28 @@ if (form) {
         }
 
         if (isValid) {
-            alert("Cita registrada correctamente (simulado)");
-            form.reset();
+            fetch('/guardar_cita', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    descripcion: descripcion.value,
+                    especialidad: especialidad.value,
+                    fecha: fecha.value,
+                    hora: hora.value,
+                    medico: medico.value
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert("✅ Cita registrada correctamente");
+                form.reset();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("❌ Error al registrar la cita");
+            });
         }
 
     });
