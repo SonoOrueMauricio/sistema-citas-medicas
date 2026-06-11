@@ -192,6 +192,7 @@ if (form) {
             .then(data => {
                 alert("✅ Cita registrada correctamente");
                 form.reset();
+                location.reload();
             })
             .catch(error => {
                 console.error('Error:', error);

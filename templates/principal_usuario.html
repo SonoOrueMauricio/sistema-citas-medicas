@@ -157,17 +157,21 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {% for c in citas %}
                                     <tr>
-                                        <td>Medicina General</td>
-                                        <td>25/05/2026 10:00</td>
-                                        <td><span class="status pendiente">Pendiente</span></td>
+                                        <td>{{ c[1] }}</td>
+                                        <td>{{ c[2] }} {{ c[3] }}</td>
+                                        <td>
+                                            {% if c[4] == 'pendiente' %}
+                                                <span class="badge pendiente">Pendiente</span>
+                                            {% elif c[4] == 'atendida' %}
+                                                <span class="badge atendida">Atendida</span>
+                                            {% else %}
+                                                <span class="badge no_atendida">No Atendida</span>
+                                            {% endif %}
+                                        </td>
                                     </tr>
-
-                                    <tr>
-                                        <td>Cardiología</td>
-                                        <td>20/05/2026 12:30</td>
-                                        <td><span class="status atendida">Atendida</span></td>
-                                    </tr>
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         </div>

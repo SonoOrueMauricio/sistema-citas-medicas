@@ -90,13 +90,25 @@ def principal_usuario():
     conexion = conectar()
     cursor = conexion.cursor()
 
-    cursor.execute("SELECT id_especialidad, nombre FROM especialidad")
+    cursor.execute("SELECT * FROM especialidad")
     especialidades = cursor.fetchall()
+
+    cursor.execute("""
+        SELECT c.id_cita, e.nombre, c.fecha, c.hora, c.estado
+        FROM cita c
+        JOIN medico m ON c.id_medico = m.id_medico
+        JOIN especialidad e ON m.id_especialidad = e.id_especialidad
+        ORDER BY c.fecha DESC
+    """)
+    citas = cursor.fetchall()
 
     cursor.close()
     conexion.close()
 
-    return render_template('principal_usuario.html', especialidades=especialidades)
+    return render_template(
+        'principal_usuario.html', especialidades=especialidades,
+        citas=citas
+    )
 
 
 @app.route('/obtener_medicos/<int:id_especialidad>')
@@ -129,11 +141,10 @@ def obtener_medicos(id_especialidad):
 @app.route('/guardar_cita', methods=['POST'])
 def guardar_cita():
     data = request.get_json()
-    descripcion = data['descripcion']
-    especialidad = data['especialidad']
+
     fecha = data['fecha']
     hora = data['hora']
-    medico = data['medico']
+    id_medico = data['medico']
 
     conexion = conectar()
     cursor = conexion.cursor()
@@ -141,13 +152,14 @@ def guardar_cita():
     cursor.execute("""
         INSERT INTO cita (id_paciente, id_medico, fecha, hora, estado)
         VALUES (%s, %s, %s, %s, %s)
-    """, (1, 1, fecha, hora, 'pendiente'))
+    """, (1, id_medico, fecha, hora, 'pendiente'))
 
     conexion.commit()
+
     cursor.close()
     conexion.close()
 
-    return "ok"
+    return jsonify({"mensaje": "ok"})
 
 
 if __name__ == '__main__':
