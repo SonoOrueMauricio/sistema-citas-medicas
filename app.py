@@ -2,8 +2,10 @@ from flask import Flask, render_template, request
 from database import conectar
 from flask import redirect, url_for
 from flask import request, jsonify
+from flask import session
 
 app = Flask(__name__)
+app.secret_key = 'mi_clave_secreta_123'
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -33,6 +35,7 @@ def login():
         conexion.close()
 
         if usuario:
+            session['id_usuario'] = usuario[0]
             return redirect(url_for('principal_usuario'))
         else:
             mensaje = "❌ Usuario o contraseña incorrectos"
@@ -87,6 +90,12 @@ def registro():
 
 @app.route('/principal_usuario')
 def principal_usuario():
+
+    if 'id_usuario' not in session:
+        return redirect(url_for('login'))
+
+    id_usuario = session.get('id_usuario')
+
     conexion = conectar()
     cursor = conexion.cursor()
 
@@ -96,17 +105,21 @@ def principal_usuario():
     cursor.execute("""
         SELECT c.id_cita, e.nombre, c.fecha, c.hora, c.estado
         FROM cita c
+        JOIN paciente p ON c.id_paciente = p.id_paciente
         JOIN medico m ON c.id_medico = m.id_medico
         JOIN especialidad e ON m.id_especialidad = e.id_especialidad
+        WHERE p.id_usuario = %s
         ORDER BY c.fecha DESC
-    """)
+    """, (id_usuario,))
+
     citas = cursor.fetchall()
 
     cursor.close()
     conexion.close()
 
     return render_template(
-        'principal_usuario.html', especialidades=especialidades,
+        'principal_usuario.html',
+        especialidades=especialidades,
         citas=citas
     )
 
@@ -145,14 +158,22 @@ def guardar_cita():
     fecha = data['fecha']
     hora = data['hora']
     id_medico = data['medico']
+    id_usuario = session.get('id_usuario')
 
     conexion = conectar()
     cursor = conexion.cursor()
 
     cursor.execute("""
+        SELECT id_paciente FROM paciente
+        WHERE id_usuario = %s
+    """, (id_usuario,))
+
+    id_paciente = cursor.fetchone()[0]
+
+    cursor.execute("""
         INSERT INTO cita (id_paciente, id_medico, fecha, hora, estado)
         VALUES (%s, %s, %s, %s, %s)
-    """, (1, id_medico, fecha, hora, 'pendiente'))
+    """, (id_paciente, id_medico, fecha, hora, 'pendiente'))
 
     conexion.commit()
 
