@@ -102,8 +102,10 @@
                                         <label>Especialidad</label>
                                         <select id="especialidad" name="especialidad">
                                             <option value="">Seleccione especialidad</option>
-                                            <option>Medicina General</option>
-                                            <option>Cardiología</option>
+                                            
+                                            {% for esp in especialidades %}
+                                                <option value="{{ esp[0] }}">{{ esp[1] }}</option>
+                                            {% endfor %} 
                                         </select>
                                         <small class="error-text"></small>
                                     </div>
@@ -128,7 +130,6 @@
                                         <label>Médico disponible</label>
                                         <select id="medico" name="medico">
                                             <option value="">Seleccione médico</option>
-                                            <option>Roberto Gomez Barrera</option>
                                         </select>
                                         <small class="error-text"></small>
                                     </div>

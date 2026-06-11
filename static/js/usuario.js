@@ -203,6 +203,28 @@ if (form) {
 
 }
 
+const especialidadSelect = document.getElementById('especialidad');
+const medicoSelect = document.getElementById('medico');
+
+especialidadSelect.addEventListener('change', function() {
+
+    const idEspecialidad = this.value;
+
+    fetch(`/obtener_medicos/${idEspecialidad}`)
+        .then(res => res.json())
+        .then(data => {
+
+            medicoSelect.innerHTML = '<option value="">Seleccione médico</option>';
+
+            data.medicos.forEach(m => {
+                medicoSelect.innerHTML += `
+                    <option value="${m.id}">${m.nombres}</option>
+                `;
+            });
+
+        });
+});
+
 /* función para mostrar error */
 function mostrarError(input, mensaje) {
 

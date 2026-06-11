@@ -87,7 +87,43 @@ def registro():
 
 @app.route('/principal_usuario')
 def principal_usuario():
-    return render_template('principal_usuario.html')
+    conexion = conectar()
+    cursor = conexion.cursor()
+
+    cursor.execute("SELECT id_especialidad, nombre FROM especialidad")
+    especialidades = cursor.fetchall()
+
+    cursor.close()
+    conexion.close()
+
+    return render_template('principal_usuario.html', especialidades=especialidades)
+
+
+@app.route('/obtener_medicos/<int:id_especialidad>')
+def obtener_medicos(id_especialidad):
+    conexion = conectar()
+    cursor = conexion.cursor()
+
+    cursor.execute("""
+        SELECT id_medico, nombres, apellidos
+        FROM medico
+        WHERE id_especialidad = %s
+    """, (id_especialidad,))
+
+    medicos = cursor.fetchall()
+
+    cursor.close()
+    conexion.close()
+
+    resultado = []
+
+    for m in medicos:
+        resultado.append({
+            "id": m[0],
+            "nombres": m[1] + " " + m[2]
+        })
+
+    return jsonify({"medicos": resultado})
 
 
 @app.route('/guardar_cita', methods=['POST'])
