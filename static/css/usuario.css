@@ -406,18 +406,26 @@ tr:nth-child(even) {
 }
 
 .logout-btn {
-    display: block;
+    display: inline-flex;
     margin-top: 20px;
-    padding: 10px;
+    padding: 10px 20px;
     text-align: center;
     background-color: #00cfff;
     color: white;
     border-radius: 8px;
     text-decoration: none;
     font-weight: bold;
-    transition: background-color 0.2s ease;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    transition: background-color 0.2s ease, text-shadow 0.3s ease;
+}
+
+.logout-btn i {
+    font-size: 12px;
 }
 
 .logout-btn:hover {
     background-color: #c82333;
+    text-shadow: 0.5px 0 0 currentColor;
 }
