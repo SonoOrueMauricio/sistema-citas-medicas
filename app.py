@@ -114,13 +114,21 @@ def principal_usuario():
 
     citas = cursor.fetchall()
 
+    cursor.execute("""
+        SELECT e.nombre, h.dia, h.hora_inicio, h.hora_fin
+        FROM horario h
+        JOIN especialidad e ON h.id_especialidad = e.id_especialidad
+    """)
+    horarios = cursor.fetchall()
+
     cursor.close()
     conexion.close()
 
     return render_template(
         'principal_usuario.html',
         especialidades=especialidades,
-        citas=citas
+        citas=citas,
+        horarios=horarios
     )
 
 
@@ -181,6 +189,42 @@ def guardar_cita():
     conexion.close()
 
     return jsonify({"mensaje": "ok"})
+
+
+@app.route('/obtener_citas')
+def obtener_citas():
+
+    if 'id_usuario' not in session:
+        return jsonify([])
+
+    id_usuario = session.get('id_usuario')
+
+    conexion = conectar()
+    cursor = conexion.cursor()
+
+    cursor.execute("""
+        SELECT e.nombre, c.fecha, c.hora
+        FROM cita c
+        JOIN paciente p ON c.id_paciente = p.id_paciente
+        JOIN medico m ON c.id_medico = m.id_medico
+        JOIN especialidad e ON m.id_especialidad = e.id_especialidad
+        WHERE p.id_usuario = %s
+    """, (id_usuario,))
+
+    citas = cursor.fetchall()
+
+    cursor.close()
+    conexion.close()
+
+    eventos = []
+
+    for c in citas:
+        eventos.append({
+            "title": c[0],
+            "start": str(c[1])
+        })
+
+    return jsonify(eventos)
 
 
 if __name__ == '__main__':

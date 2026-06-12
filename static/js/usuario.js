@@ -4,27 +4,38 @@ document.addEventListener('DOMContentLoaded', function() {
     /* ===== CALENDARIO ===== */
     var calendarEl = document.getElementById('calendar');
 
-    if (calendarEl) {
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
+    setTimeout(() => {
 
-            headerToolbar: {
-                left: 'prev,next today',
-                center: 'title',
-                right: ''
-            },
+        var calendarEl = document.getElementById('calendar');
 
-            locale: 'es',
+        if (calendarEl) {
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
 
-            events: [
-                { title: 'Cita Médica', date: '2026-05-25' },
-                { title: 'Control', date: '2026-05-28' }
-            ]
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: ''
+                },
+
+                locale: 'es',
+
+                events: '/obtener_citas'
+                
+            });
+
+            calendar.render();
+
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    setTimeout(() => {
+                        calendar.destroy();
+                        calendar.render();
+                    }, 200);
+                });
         });
-
-        calendar.render();
     }
-
+});
 
     /* ===== BLOQUEAR FECHAS PASADAS ===== */
     const fechaInput = document.getElementById('fecha');
