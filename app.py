@@ -114,6 +114,15 @@ def principal_usuario():
 
     citas = cursor.fetchall()
 
+# obtener datos del paciente para mostrar en el menu usuario
+    cursor.execute("""
+        SELECT nombres, apellidos, dni, telefono, correo
+        FROM paciente
+        WHERE id_usuario = %s
+    """, (id_usuario,))
+
+    paciente = cursor.fetchone()
+
     cursor.execute("""
         SELECT e.nombre, h.dia, h.hora_inicio, h.hora_fin
         FROM horario h
@@ -128,7 +137,8 @@ def principal_usuario():
         'principal_usuario.html',
         especialidades=especialidades,
         citas=citas,
-        horarios=horarios
+        horarios=horarios,
+        paciente=paciente
     )
 
 
