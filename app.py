@@ -237,5 +237,33 @@ def obtener_citas():
     return jsonify(eventos)
 
 
+@app.route('/actualizar_usuario', methods=['POST'])
+def actualizar_usuario():
+
+    if 'id_usuario' not in session:
+        return redirect(url_for('login'))
+
+    id_usuario = session.get('id_usuario')
+
+    telefono = request.form.get('telefono')
+    correo = request.form.get('correo')
+
+    conexion = conectar()
+    cursor = conexion.cursor()
+
+    cursor.execute("""
+        UPDATE paciente
+        SET telefono = %s, correo = %s
+        WHERE id_usuario = %s
+    """, (telefono, correo, id_usuario))
+
+    conexion.commit()
+
+    cursor.close()
+    conexion.close()
+
+    return redirect(url_for('principal_usuario'))
+
+
 if __name__ == '__main__':
     app.run(debug=True)

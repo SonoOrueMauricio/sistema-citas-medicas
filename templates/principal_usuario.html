@@ -60,8 +60,7 @@
                         </p>
                         <p>
                             En esta pantalla inicial encontrarás un calendario donde se
-                            visualizarán tus próximas citas. Por ahora es solo una vista
-                            informativa; más adelante se conectará a la base de datos.
+                            visualizarán tus próximas citas.
                         </p>
                     </div>
 
@@ -219,7 +218,7 @@
 
                     <h2>Datos personales</h2>
 
-                    <form class="form" id="userForm">
+                    <form class="form" id="userForm" method="POST" action="/actualizar_usuario">
 
                         <!-- DATOS FIJOS -->
                         <div class="form-row">
@@ -245,7 +244,7 @@
 
                             <div class="form-group">
                                 <label>Teléfono</label>
-                                <input type="text" value="{{ paciente[3] if paciente else '' }}" class="editable">
+                                <input type="text" name="telefono" value="{{ paciente[3] if paciente else '' }}" class="editable">
                             </div>
 
                         </div>
@@ -254,7 +253,7 @@
 
                             <div class="form-group">
                                 <label>Correo</label>
-                                <input type="email" value="{{ paciente[4] if paciente else '' }}" class="editable">
+                                <input type="email" name="correo" value="{{ paciente[4] if paciente else '' }}" class="editable">
                             </div>
 
                         </div>

@@ -107,7 +107,7 @@ if (editBtn) {
     editBtn.addEventListener('click', () => {
 
         editableInputs.forEach(input => {
-            input.disabled = false;
+            input.removeAttribute('disabled');
         });
 
         editBtn.style.display = 'none';
@@ -117,18 +117,12 @@ if (editBtn) {
 }
 
 if (saveBtn) {
-    saveBtn.addEventListener('click', (e) => {
+    saveBtn.addEventListener('click', () => {
 
-        e.preventDefault();
 
-        editableInputs.forEach(input => {
-            input.disabled = true;
-        });
 
         editBtn.style.display = 'block';
         saveBtn.style.display = 'none';
-
-        alert("Datos actualizados (simulado)");
 
     });
 }
