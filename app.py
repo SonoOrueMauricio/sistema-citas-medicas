@@ -8,6 +8,12 @@ app = Flask(__name__)
 app.secret_key = 'mi_clave_secreta_123'
 
 
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
+
+
 @app.route('/', methods=['GET', 'POST'])
 def login():
     mensaje = ""

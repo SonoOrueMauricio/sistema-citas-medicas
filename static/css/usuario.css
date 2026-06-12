@@ -404,3 +404,20 @@ tr:nth-child(even) {
 .error {
     border-color: red !important;
 }
+
+.logout-btn {
+    display: block;
+    margin-top: 20px;
+    padding: 10px;
+    text-align: center;
+    background-color: #00cfff;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+.logout-btn:hover {
+    background-color: #c82333;
+}
